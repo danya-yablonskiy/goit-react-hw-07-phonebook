@@ -2,7 +2,7 @@
 import { Form } from './Form/Form';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
-import { getContactsThunk } from 'store/contacts';
+import { getContactsAction } from 'store/contacts';
 import { useDispatch } from 'react-redux';
 
 export const App = () => {
@@ -14,7 +14,7 @@ export const App = () => {
       <h2>Contacts</h2>
       <Filter />
       <ContactList />
-      <button onClick={() => dispatch(getContactsThunk())}>Test</button>
+      <button onClick={() => dispatch(getContactsAction())}>Test</button>
     </div>
   );
 };
