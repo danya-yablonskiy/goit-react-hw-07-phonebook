@@ -22,7 +22,6 @@ export const getContactsAction = () => {
     }
   };
 };
-
 // export const getContactsThunk = createAsyncThunk(
 //   'contacts/getContacts/pending',
 //   async () => {
