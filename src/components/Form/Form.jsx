@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FormStyle } from './Form.styled';
-import { useDispatch, useSelector } from 'react-redux';
+import {  useSelector } from 'react-redux';
 
 
 export const Form = () => {
