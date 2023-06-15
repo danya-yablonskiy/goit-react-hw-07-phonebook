@@ -1,13 +1,13 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { ListItem, Button, List } from './ContactList.styled';
+// import { useDispatch, useSelector } from 'react-redux';
+import {  List } from './ContactList.styled';
 
 export const ContactList = () => {
-  const {
-    contacts: {
-      contacts: { items },
-      filter,
-    },
-  } = useSelector(state => state);
+  // const {
+  //   contacts: {
+  //     contacts: { items },
+  //     filter,
+  //   },
+  // } = useSelector(state => state);
 
   // const dispatch = useDispatch();
   // const filterName = items.filter(item =>
