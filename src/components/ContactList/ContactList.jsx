@@ -1,26 +1,28 @@
-// import { useDispatch, useSelector } from 'react-redux';
-import {  List } from './ContactList.styled';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, List, ListItem } from './ContactList.styled';
+import { deleteContacts } from 'store/API/deleteContacts';
 
 export const ContactList = () => {
-  // const {
-  //   contacts: {
-  //     contacts: { items },
-  //     filter,
-  //   },
-  // } = useSelector(state => state);
+  const {
+    contacts: {
+      contacts: { items },
+      filter,
+    },
+  } = useSelector(state => state);
 
-  // const dispatch = useDispatch();
-  // const filterName = items.filter(item =>
-  //   item.name.toLowerCase().includes(filter.toLowerCase())
-  // );
+  const dispatch = useDispatch();
 
-  // const deleteContact = id => {
-  //   dispatch(deleteContacts(id));
-  // };
+  const filterName = items.filter(item =>
+    item.name.toLowerCase().includes(filter.toLowerCase())
+  );
+
+  const deleteContact = id => {
+    dispatch(deleteContacts(id));
+  };
 
   return (
     <List>
-      {/* {filterName.map(item => (
+      {filterName.map(item => (
         <ListItem key={item.id}>
           <p>
             {item.name}: {item.number}
@@ -29,7 +31,7 @@ export const ContactList = () => {
             Delete
           </Button>
         </ListItem>
-      ))} */}
+      ))}
     </List>
   );
 };
