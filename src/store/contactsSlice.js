@@ -10,6 +10,8 @@ export const initialState = {
   contacts: {
     items: [],
     isLoading: false,
+    isAdding: false,
+    isDeleting: false,
     error: null,
   },
 };
@@ -32,22 +34,22 @@ export const contactsSlice = createSlice({
         state.contacts.error = payload;
       })
       .addCase(postContactsThunk.pending, state => {
-        state.contacts.isLoading = true;
+        state.contacts.isAdding = true;
       })
       .addCase(postContactsThunk.fulfilled, (state, { payload }) => {
-        state.contacts.isLoading = false;
+        state.contacts.isAdding = false;
         state.contacts.error = '';
         state.contacts.items.push(payload);
       })
       .addCase(postContactsThunk.rejected, (state, { payload }) => {
-        state.contacts.isLoading = false;
+        state.contacts.isAdding = false;
         state.contacts.error = payload;
       })
       .addCase(deleteContactsThunk.pending, state => {
-        state.contacts.isLoading = true;
+        state.contacts.isDeleting = true;
       })
       .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
-        state.contacts.isLoading = false;
+        state.contacts.isDeleting = false;
         state.contacts.error = '';
         state.contacts.items = state.contacts.items.filter(
           contact => contact.id !== payload.id
@@ -55,7 +57,7 @@ export const contactsSlice = createSlice({
       })
       .addCase(deleteContactsThunk.rejected, (state, { payload }) => {
         console.log(payload);
-        state.contacts.isLoading = false;
+        state.contacts.isDeleting = false;
         state.contacts.error = payload;
       });
   },
