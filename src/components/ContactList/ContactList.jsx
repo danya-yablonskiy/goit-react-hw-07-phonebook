@@ -1,12 +1,16 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, List, ListItem } from './ContactList.styled';
-import { deleteContacts } from 'store/API/deleteContacts';
+
 import { getContactsSelector } from 'store/selector';
+import { deleteContactsThunk } from 'store/options';
+import toast, { Toaster } from 'react-hot-toast';
+const notify = () => toast.success('Your contact has been successfully deleted');
 export const ContactList = () => {
   const {
     contacts: { contacts },
   } = useSelector(getContactsSelector);
   const { filter } = useSelector(getContactsSelector);
+
   const dispatch = useDispatch();
 
   const filterName = contacts.items.filter(item =>
@@ -14,21 +18,32 @@ export const ContactList = () => {
   );
 
   const deleteContact = id => {
-    dispatch(deleteContacts(id));
+        notify();
+    dispatch(deleteContactsThunk(id));
+
   };
 
   return (
     <List>
+      {contacts.isLoading && <p>Loading...</p>}
+      {contacts.error && (
+        <p>Oops!Something went wrong. Error: {contacts.error}</p>
+      )}
       {filterName.map(item => (
         <ListItem key={item.id}>
           <p>
-            {item.name}: {item.number}
+            {item.name}: {item.phone}
           </p>
-          <Button type="button" onClick={() => deleteContact(item.id)}>
-            Delete
+          <Button
+            type="button"
+            onClick={() => deleteContact(item.id)}
+            disabled={contacts.isDeleting}
+          >
+            {contacts.isDeleting ? 'Deleting...' : 'Delete'}
           </Button>
         </ListItem>
       ))}
+      <Toaster/>
     </List>
   );
 };
