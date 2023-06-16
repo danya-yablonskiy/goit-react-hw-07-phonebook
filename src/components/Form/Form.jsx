@@ -1,14 +1,14 @@
 import { FormStyle } from './Form.styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { postContacts } from 'store/API/postContacts';
-
+import { getContactsSelector } from 'store/selector';
 export const Form = () => {
   const dispatch = useDispatch();
   const {
     contacts: {
       contacts: { items },
     },
-  } = useSelector(state => state);
+  } = useSelector(getContactsSelector);
 
   const handleSubmit = e => {
     e.preventDefault();
