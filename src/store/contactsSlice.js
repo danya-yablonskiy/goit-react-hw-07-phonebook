@@ -43,8 +43,7 @@ export const contactsSlice = createSlice({
         state.contacts.isLoading = false;
         state.contacts.error = payload;
       })
-      .addCase(deleteContactsThunk.pending, (state, { payload }) => {
-        console.log(payload);
+      .addCase(deleteContactsThunk.pending, state => {
         state.contacts.isLoading = true;
       })
       .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
