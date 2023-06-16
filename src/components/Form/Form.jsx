@@ -1,52 +1,34 @@
-import { useState } from 'react';
 import { FormStyle } from './Form.styled';
-import {  useSelector } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { postContacts } from 'store/API/postContacts';
 
 export const Form = () => {
-  const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
   const {
     contacts: {
       contacts: { items },
     },
   } = useSelector(state => state);
 
-  // const dispatch = useDispatch();
-
-  const addContact = e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const duplicate = items.find(item => item.name === name);
+
+    const newContact = {
+      name: e.target.elements.name.value,
+      phone: e.target.elements.number.value,
+    };
+    const duplicate = items.find(item => item.name === newContact.name);
 
     if (duplicate) {
-      alert('Error!');
+      alert('This name is already created in your contact book');
       return;
     }
-
-    // dispatch(setContacts({ id: nanoid(), name, number }));
-    reset();
-  };
-
-  const handleChange = ({ target: { name, value } }) => {
-    switch (name) {
-      case 'name':
-        setName(value);
-        break;
-      case 'number':
-        setNumber(value);
-        break;
-      default:
-        break;
-    }
-  };
-
-  const reset = () => {
-    setName('');
-    setNumber('');
+    dispatch(postContacts(newContact));
+    e.target.reset();
   };
 
   return (
-    <FormStyle onSubmit={addContact}>
+    <FormStyle onSubmit={handleSubmit}>
       <label>
         Name
         <br />
@@ -56,8 +38,6 @@ export const Form = () => {
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           required
-          onChange={handleChange}
-          value={name}
         />
       </label>
       <br />
@@ -69,8 +49,6 @@ export const Form = () => {
           pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
           title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           required
-          onChange={handleChange}
-          value={number}
         />
       </label>
       <br />
