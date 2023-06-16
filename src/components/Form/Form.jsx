@@ -1,12 +1,18 @@
 import { FormStyle } from './Form.styled';
 import { useDispatch, useSelector } from 'react-redux';
-import { postContacts } from 'store/API/postContacts';
+
+import { postContactsThunk } from 'store/options';
 import { getContactsSelector } from 'store/selector';
+
+import toast, { Toaster } from 'react-hot-toast';
+
+const notify = () => toast.success('Your contact has been successfully added');
+
 export const Form = () => {
   const dispatch = useDispatch();
   const {
     contacts: {
-      contacts: { items },
+      contacts: { items, isAdding },
     },
   } = useSelector(getContactsSelector);
 
@@ -23,7 +29,8 @@ export const Form = () => {
       alert('This name is already created in your contact book');
       return;
     }
-    dispatch(postContacts(newContact));
+    dispatch(postContactsThunk(newContact));
+    notify()
     e.target.reset();
   };
 
@@ -52,7 +59,10 @@ export const Form = () => {
         />
       </label>
       <br />
-      <button type="submit">Add contact</button>
+      <button type="submit" disabled={isAdding} >
+        {isAdding ? 'Adding...' : 'Add contact'}
+      </button>
+      <Toaster/>
     </FormStyle>
   );
 };
