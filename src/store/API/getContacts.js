@@ -6,3 +6,4 @@ export const getContacts = async () => {
   );
   return data;
 };
+
