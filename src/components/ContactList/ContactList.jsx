@@ -4,15 +4,12 @@ import { deleteContacts } from 'store/API/deleteContacts';
 
 export const ContactList = () => {
   const {
-    contacts: {
-      contacts: { items },
-      filter,
-    },
+    contacts: { contacts },
   } = useSelector(state => state);
-
+  const { filter } = useSelector(state => state);
   const dispatch = useDispatch();
 
-  const filterName = items.filter(item =>
+  const filterName = contacts.items.filter(item =>
     item.name.toLowerCase().includes(filter.toLowerCase())
   );
 
