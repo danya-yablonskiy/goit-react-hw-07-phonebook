@@ -43,17 +43,19 @@ export const contactsSlice = createSlice({
         state.contacts.isLoading = false;
         state.contacts.error = payload;
       })
-      .addCase(deleteContactsThunk.pending, state => {
+      .addCase(deleteContactsThunk.pending, (state, { payload }) => {
+        console.log(payload);
         state.contacts.isLoading = true;
       })
       .addCase(deleteContactsThunk.fulfilled, (state, { payload }) => {
         state.contacts.isLoading = false;
         state.contacts.error = '';
         state.contacts.items = state.contacts.items.filter(
-          contact => contact.id !== payload
+          contact => contact.id !== payload.id
         );
       })
       .addCase(deleteContactsThunk.rejected, (state, { payload }) => {
+        console.log(payload);
         state.contacts.isLoading = false;
         state.contacts.error = payload;
       });
